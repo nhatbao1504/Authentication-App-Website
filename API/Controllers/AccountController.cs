@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     //api/account
@@ -27,6 +29,7 @@ namespace API.Controllers
             _configuration = configuration;
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         //api/account/register
 
@@ -65,6 +68,7 @@ namespace API.Controllers
             });
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         //api/account/login
 
@@ -154,12 +158,30 @@ namespace API.Controllers
             return Ok(new UserDetailDto{
                 Id = user.Id,
                 FullName = user.FullName,
+                Email = user.Email,
                 Roles = [.. await _userManager.GetRolesAsync(user)],
                 PhoneNumber = user.PhoneNumber,
                 PhoneNumberConfirm = user.PhoneNumberConfirmed,
                 AccessFailCount = user.AccessFailedCount
             });
         }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<UserDetailDto>>> GetUser()
+        {
+            var users = await _userManager.Users.Select(u => new UserDetailDto{
+                Id = u.Id,
+                Email = u.Email,
+                FullName = u.FullName,
+                Roles = _userManager.GetRolesAsync(u).Result.ToArray()
+            }).ToListAsync();
+
+            return Ok(users);
+        }
+
+        
+
+
 
     }
 }
