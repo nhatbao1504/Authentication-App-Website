@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [Authorize(Roles = "Admin, Manager")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("api/[controller]")]
     public class RolesController:ControllerBase
@@ -75,7 +75,28 @@ namespace API.Controllers
                 return Ok(new {message="Role deleted successfully."});
             }
 
-            return BadRequest("Role deletion failed.");
+            return BadRequest("Role delete failed.");
+        }
+
+
+        [HttpPost("assign")]
+        public async Task<IActionResult> AssignRole([FromBody] RoleAsignDto roleAsignDto)
+        {
+            var user = await _userManager.FindByIdAsync(roleAsignDto.UserId);
+
+            if(user is null)
+            {
+                return NotFound("User not found");
+            }
+
+            var role = _roleManager.FindByIdAsync(roleAsignDto.RoleId);
+
+            if (role is null)
+            {
+                return NotFound("Role not found");
+            }
+
+            var result = _userManager.AddToRoleAsync(user, role.Name!);
         }
 
 
