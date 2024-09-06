@@ -89,17 +89,31 @@ namespace API.Controllers
                 return NotFound("User not found");
             }
 
-            var role = _roleManager.FindByIdAsync(roleAsignDto.RoleId);
+            var role = await _roleManager.FindByIdAsync(roleAsignDto.RoleId);
 
             if (role is null)
             {
                 return NotFound("Role not found");
             }
 
-            var result = _userManager.AddToRoleAsync(user, role.Name!);
+            var result = await _userManager.AddToRoleAsync(user, role.Name!);
+
+            if(result.Succeeded)
+            {
+                return Ok(new {message="Role assigned successfully"});
+            }
+            
+            var error = result.Errors.FirstOrDefault();
+
+            return BadRequest(error!.Description);
         }
 
 
+        //[HttpDelete("DeleteRole")]
+        //public async Task<IActionResult> DeleteRole([FromBody] RoleAsignDto roleAsignDto)
+        //{
+        //
+        //}
 
     }
 }
