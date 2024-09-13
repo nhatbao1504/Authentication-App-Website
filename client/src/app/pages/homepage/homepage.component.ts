@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { AuthService } from './../../services/auth.service';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -9,5 +10,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './homepage.component.css'
 })
 export class HomepageComponent {
-
+  authService = inject(AuthService)
 }
