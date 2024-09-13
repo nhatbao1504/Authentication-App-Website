@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService {
+
   apiUrl:string = environment.apiUrl;
   private tokenKey ='token'
 
@@ -24,4 +25,19 @@ export class AuthService {
       })
     );
   }
+
+  IsLoggedIn=():boolean=>{
+    const token = this.getToken();
+    if(!token) {return false;}
+
+    return !this.isTokenExpired();
+  }
+
+  isTokenExpired() {
+    const token = this.getToken();
+    if(!token) {return true};
+    const decoded = jwtDecode(token);
+  }
+
+  getToken = ():string|null => localStorage.getItem(this.tokenKey) || '';
 }

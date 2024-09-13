@@ -3478,11 +3478,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\baode\\Desktop\\project\\Authentication_App_Website\\API\\API.csproj",
+      "projectUniqueName": "C:\\Users\\baode\\Desktop\\project\\Authentication_App_Website pt2\\Authentication-App-Website\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "c:\\Users\\baode\\Desktop\\project\\Authentication_App_Website\\API\\API.csproj",
+      "projectPath": "C:\\Users\\baode\\Desktop\\project\\Authentication_App_Website pt2\\Authentication-App-Website\\API\\API.csproj",
       "packagesPath": "C:\\Users\\baode\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\baode\\Desktop\\project\\Authentication_App_Website\\API\\obj\\",
+      "outputPath": "C:\\Users\\baode\\Desktop\\project\\Authentication_App_Website pt2\\Authentication-App-Website\\API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

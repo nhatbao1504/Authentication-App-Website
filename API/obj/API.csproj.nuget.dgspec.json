@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\baode\\Desktop\\project\\Authentication_App_Website\\api\\API.csproj": {}
+    "C:\\Users\\baode\\Desktop\\project\\Authentication_App_Website pt2\\Authentication-App-Website\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\baode\\Desktop\\project\\Authentication_App_Website\\api\\API.csproj": {
+    "C:\\Users\\baode\\Desktop\\project\\Authentication_App_Website pt2\\Authentication-App-Website\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\baode\\Desktop\\project\\Authentication_App_Website\\api\\API.csproj",
+        "projectUniqueName": "C:\\Users\\baode\\Desktop\\project\\Authentication_App_Website pt2\\Authentication-App-Website\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\baode\\Desktop\\project\\Authentication_App_Website\\api\\API.csproj",
+        "projectPath": "C:\\Users\\baode\\Desktop\\project\\Authentication_App_Website pt2\\Authentication-App-Website\\API\\API.csproj",
         "packagesPath": "C:\\Users\\baode\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\baode\\Desktop\\project\\Authentication_App_Website\\api\\obj\\",
+        "outputPath": "C:\\Users\\baode\\Desktop\\project\\Authentication_App_Website pt2\\Authentication-App-Website\\API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
