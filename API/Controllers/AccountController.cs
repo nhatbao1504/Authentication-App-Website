@@ -117,6 +117,103 @@ namespace API.Controllers
             });
         }
 
+        [AllowAnonymous]
+        [HttpPost("forgot-password")]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordDto forgotPasswordDto)
+        {
+            var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
+
+            if (user is null)
+            {
+                return Ok(new AuthResponseDto
+                {
+                    IsSuccess = false,
+                    Message = "This user does not exist!"
+                });
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var resetLink = $"http://localhost:4200/reset-password?email={user.Email}&token={WebUtility.UrlEncode(token)}";
+
+
+
+            // using RestSharp;
+            // var request = new RestRequest();
+            // request.AddHeader("Authorization", "Bearer ebc28eac412400f4e244aa9438e09625");
+            // request.AddHeader("Content-Type", "application/json");
+            // request.AddParameter("application/json", "{\"from\":{\"email\":\"mailtrap@demomailtrap.com\",\"name\":\"Mailtrap Test\"},\"to\":[{\"email\":\"hnhatbao1504@gmail.com\"}],\"template_uuid\":\"b86c4411-d62f-4306-b842-5894b5a07eb6\",\"template_variables\":{\"user_email\":\"Test_User_email\",\"pass_reset_link\":\"Test_Pass_reset_link\"}}", ParameterType.RequestBody);
+            // var response = client.Post(request);
+            // System.Console.WriteLine(response.Content);
+
+            var client = new RestClient("https://send.api.mailtrap.io/api/send");
+
+            var request = new RestRequest
+            {
+                Method = Method.Post,
+                RequestFormat = DataFormat.Json
+            };
+
+            request.AddHeader("Authorization", "Bearer ebc28eac412400f4e244aa9438e09625");
+            request.AddJsonBody(new
+            {
+                from = new { email = "mailtrap@demomailtrap.com" },
+                to = new[] { new { email = user.Email } },
+                template_uuid = "b86c4411-d62f-4306-b842-5894b5a07eb6",
+                template_variables = new { user_email = user.Email, pass_reset_link = resetLink }
+            });
+
+            var response = client.Execute(request);
+            if (response.IsSuccessful)
+            {
+                return Ok(new AuthResponseDto
+                {
+                    IsSuccess = true,
+                    Message = "Reset password email have been sent! Please check your email."
+                });
+            }
+            else
+            {
+                return BadRequest(new AuthResponseDto
+                {
+                    IsSuccess = false,
+                    Message = "Send email fail!"
+                });
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordDto resetPassWordDto)
+        {
+            var user = await _userManager.FindByEmailAsync(resetPassWordDto.Email);
+            // resetPassWordDto.Token = WebUtility.UrlDecode(resetPassWordDto.Token);
+
+            if (user is null)
+            {
+
+                return BadRequest(new AuthResponseDto
+                {
+                    IsSuccess = false,
+                    Message = "This user does not exist!"
+                });
+            }
+
+            var result = await _userManager.ResetPasswordAsync(user, resetPassWordDto.Token, resetPassWordDto.NewPassword);
+
+            if (result.Succeeded)
+            {
+                return Ok(new AuthResponseDto
+                {
+                    IsSuccess = true,
+                    Message = "Password Reset Successfully!"
+                });
+            }
+            return BadRequest (new AuthResponseDto{
+                IsSuccess = false,
+                Message = result.Errors.FirstOrDefault()!.Description
+            });
+        }
+
         private string GenerateToken(AppUser user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -193,69 +290,7 @@ namespace API.Controllers
             return Ok(users);
         }
 
-        [AllowAnonymous]
-        [HttpPost("forgot-password")]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordDto forgotPasswordDto)
-        {
-            var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
-
-            if (user is null)
-            {
-                return Ok(new AuthResponseDto
-                {
-                    IsSuccess = false,
-                    Message = "This user does not exist!"
-                });
-            }
-
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var resetLink = $"http://localhost:4200/reset-password?email={user.Email}&token={WebUtility.UrlEncode(token)}";
-
-
-
-            // using RestSharp;
-            // var request = new RestRequest();
-            // request.AddHeader("Authorization", "Bearer ebc28eac412400f4e244aa9438e09625");
-            // request.AddHeader("Content-Type", "application/json");
-            // request.AddParameter("application/json", "{\"from\":{\"email\":\"mailtrap@demomailtrap.com\",\"name\":\"Mailtrap Test\"},\"to\":[{\"email\":\"hnhatbao1504@gmail.com\"}],\"template_uuid\":\"b86c4411-d62f-4306-b842-5894b5a07eb6\",\"template_variables\":{\"user_email\":\"Test_User_email\",\"pass_reset_link\":\"Test_Pass_reset_link\"}}", ParameterType.RequestBody);
-            // var response = client.Post(request);
-            // System.Console.WriteLine(response.Content);
-
-            var client = new RestClient("https://send.api.mailtrap.io/api/send");
-
-            var request = new RestRequest
-            {
-                Method = Method.Post,
-                RequestFormat = DataFormat.Json
-            };
-
-            request.AddHeader("Authorization", "Bearer ebc28eac412400f4e244aa9438e09625");
-            request.AddJsonBody(new
-            {
-                from = new { email = "mailtrap@demomailtrap.com" },
-                to = new[] { new { email = user.Email } },
-                template_uuid = "b86c4411-d62f-4306-b842-5894b5a07eb6",
-                template_variables = new { user_email = user.Email, pass_reset_link = resetLink }
-            });
-
-            var response = client.Execute(request);
-            if (response.IsSuccessful)
-            {
-                return Ok(new AuthResponseDto
-                {
-                    IsSuccess = true,
-                    Message = "Reset password email have been sent! Please check your email."
-                });
-            }
-            else
-            {
-                return BadRequest(new AuthResponseDto
-                {
-                    IsSuccess = false,
-                    Message = "Send email fail!"
-                });
-            }
-        }
+        
 
 
 
