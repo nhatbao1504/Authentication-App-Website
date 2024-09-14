@@ -53,7 +53,7 @@ namespace API.Controllers
             var roles = await _roleManager.Roles.Select(r => new RoleResponseDto{
                 Id = r.Id,
                 Name = r.Name,
-                TotalUser = _userManager.GetUsersInRoleAsync(r.Name!).Result.Count
+                TotalUsers = _userManager.GetUsersInRoleAsync(r.Name!).Result.Count
             }).ToListAsync();
 
             return Ok(roles);       

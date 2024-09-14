@@ -9,8 +9,10 @@
     @if(isLoggedIn()){
     <div *ngIf="authService.getUserDetail() as userDetail">
       <div class="flex items-center gap-5">
-        <a [matMenuTriggerFor]="menu" class="flex items-center cursor-pointer gap2">
-          <div class="flex items-center justify-center w-5 h-5 p-5 font-bold text-white bg-red-400 rounded-full shadow-md">
+        <a [matMenuTriggerFor]="menu"
+          class="flex items-center cursor-pointer gap2">
+          <div
+            class="flex items-center justify-center w-5 h-5 p-5 font-bold text-white bg-red-400 rounded-full shadow-md">
             {{userDetail!.fullName[0].toUpperCase()}}
           </div>
           <div class="flex flex-col text-black">
@@ -36,24 +38,33 @@
             <span>Logout</span>
           </button>
         </mat-menu>
-        <a *ngIf="userDetail?.roles.includes('Admin')" mat-button routerLink="/users">
-          <mat-icon>groups</mat-icon>
-        </a>
+        <div>
+          <a *ngIf="userDetail?.roles.includes('Admin')" mat-button
+            routerLink="/users">
+            <mat-icon>groups</mat-icon>
+            User
+          </a>
+          <a *ngIf="userDetail?.roles.includes('Admin')" mat-button
+            routerLink="/roles">
+            <mat-icon>settings</mat-icon>
+            Role
+          </a>
+        </div>
       </div>
     </div>
     }@else{
-<div>
-  <div class="flex items-center gap5">
-    <a mat-button routerLink="/login">
-      Login
-    </a>
+    <div>
+      <div class="flex items-center gap5">
+        <a mat-button routerLink="/login">
+          Login
+        </a>
 
-    <a mat-button routerLink="/register">
-      Register
-    </a>
+        <a mat-button routerLink="/register">
+          Register
+        </a>
 
-  </div>
-  </div>
+      </div>
+    </div>
     }
 
   </mat-toolbar>

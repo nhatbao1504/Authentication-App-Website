@@ -85,7 +85,7 @@ export class RegisterComponent implements OnInit {
       }
     );
 
-    this.roles$ = this.roleService.getRole();
+    this.roles$ = this.roleService.getRoles();
   }
 
   private passwordMatchValidator(

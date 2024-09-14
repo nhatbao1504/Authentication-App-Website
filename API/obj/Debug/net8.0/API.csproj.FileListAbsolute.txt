@@ -282,3 +282,4 @@ C:\Users\baode\Desktop\project\Authentication_App_Website pt2\Authentication-App
 C:\Users\baode\Desktop\project\Authentication_App_Website pt2\Authentication-App-Website\API\obj\Debug\net8.0\API.pdb
 C:\Users\baode\Desktop\project\Authentication_App_Website pt2\Authentication-App-Website\API\obj\Debug\net8.0\API.genruntimeconfig.cache
 C:\Users\baode\Desktop\project\Authentication_App_Website pt2\Authentication-App-Website\API\obj\Debug\net8.0\ref\API.dll
+C:\Users\baode\Desktop\project\Authentication_App_Website pt2\Authentication-App-Website\API\bin\Debug\net8.0\RestSharp.dll
