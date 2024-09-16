@@ -9,47 +9,53 @@ import { roleGuard } from './guards/role.guard';
 import { RoleComponent } from './pages/role/role.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 
 export const routes: Routes = [
   {
-    path:'',
-    component:HomepageComponent
+    path: '',
+    component: HomepageComponent
   },
   {
-    path:'login',
-    component:LoginComponent
+    path: 'login',
+    component: LoginComponent
   },
   {
-    path:'register',
-    component:RegisterComponent
+    path: 'register',
+    component: RegisterComponent
   },
   {
-    path:'account/:id',
-    component:AccountComponent,
-    canActivate:[authGuard]
+    path: 'account/:id',
+    component: AccountComponent,
+    canActivate: [authGuard]
   },
   {
-    path:'forgot-password',
-    component:ForgotPasswordComponent
+    path: 'forgot-password',
+    component: ForgotPasswordComponent
   },
   {
-    path:'reset-password',
-    component:ResetPasswordComponent
+    path: 'reset-password',
+    component: ResetPasswordComponent
   },
   {
-    path:'users',
-    component:UsersComponent,
-    canActivate:[roleGuard],
-    data:{
-      roles:['Admin'],
+    path: 'change-password',
+    component: ChangePasswordComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'users',
+    component: UsersComponent,
+    canActivate: [roleGuard],
+    data: {
+      roles: ['Admin'],
     },
   },
   {
-    path:'roles',
-    component:RoleComponent,
-    canActivate:[roleGuard],
-    data:{
-      roles:['Admin'],
+    path: 'roles',
+    component: RoleComponent,
+    canActivate: [roleGuard],
+    data: {
+      roles: ['Admin'],
     },
   },
 ];

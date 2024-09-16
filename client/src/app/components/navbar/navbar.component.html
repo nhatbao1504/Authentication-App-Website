@@ -31,6 +31,12 @@
               View Profile
             </span>
           </button>
+          <button [routerLink]="['change-password']" mat-menu-item>
+            <mat-icon>
+              password
+            </mat-icon>
+            <span>Change Password</span>
+          </button>
           <button (click)="logout()" mat-menu-item>
             <mat-icon>
               logout

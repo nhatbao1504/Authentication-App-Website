@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { LoginRequest } from '../interfaces/login-request';
 import { RegisterRequest } from '../interfaces/register-request';
@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
 import { UserDetail } from '../interfaces/user-detail';
 import { ResetPasswordRequest } from '../interfaces/reset-password-request';
+import { ChangePasswordRequest } from '../interfaces/change-password-request';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,9 @@ export class AuthService {
 
   resetPassword = (data:ResetPasswordRequest): Observable<AuthResponse> =>
     this.http.post<AuthResponse>(`${this.apiUrl}account/reset-password`, data);
+
+  changePassword = (data:ChangePasswordRequest): Observable<AuthResponse> =>
+    this.http.post<AuthResponse>(`${this.apiUrl}account/change-password`, data);
 
   getUserDetail=()=>{
     const token = this.getToken();
